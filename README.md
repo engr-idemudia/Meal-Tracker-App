@@ -6,7 +6,7 @@ they enjoy the most or the least, the meals they consume most or the least and t
 Users would be able to upload images of their meals, number of the calories and their level of enjoyability (rating). 
 
 ### Most likely tech stack
-* Javascript / Nodejs framework
+* Javascript / Nodejs framework - [Adonisjs](https://adonisjs.com/)
 * MySql
 
 ### Epics
