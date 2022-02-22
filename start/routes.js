@@ -17,3 +17,5 @@
 const Route = use('Route')
 
 Route.get('/', 'HomeController.index')
+Route.get('/signup', 'UsersController.signup')
+Route.post('/create-account', 'UsersController.createAccount').validator('CreateUser');
