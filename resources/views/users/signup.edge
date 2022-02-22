@@ -1,0 +1,30 @@
+@layout('layouts/main')
+
+@section('title')
+    <title> Sign up - Meal Tracker </title>
+@endsection
+
+@section('body')
+  <h2> Create Account</h2>
+
+  <form action="/create-account" method="POST">
+    {{ csrfField() }}
+    <div>
+        <label for="email">Email address</label>
+        <input type="email" name="email" id="email" placeholder="Email address" value="{{ old('email', '') }}" />
+        @if(hasErrorFor('email'))
+             {{ getErrorFor('email') }}
+        @endif
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password"  value="{{ old('password', '') }}" />
+        @if(hasErrorFor('password'))
+            {{ getErrorFor('password') }}
+        @endif
+    </div>
+    <div>
+        <button type="submit">Create Account</button>
+    </div>
+  </form>
+@endsection

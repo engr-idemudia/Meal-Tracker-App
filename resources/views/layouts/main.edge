@@ -16,13 +16,21 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav ms-auto">
-                <a class="nav-link" aria-current="page" href="/">Home</a>
+                <a class="nav-link" href="/signup">Sign Up</a>
                 <a class="nav-link" href="#"></a>
             </div>
             </div>
         </div>
     </nav>
     <main class="container mt-3">
+        @if(flashMessage('success'))
+            <div class="mb-4">{{ flashMessage('success') }}</div>
+        @endif
+        @if(flashMessage('error'))
+            <div class="mb-4">{{ flashMessage('error') }}</div>
+        @endif
+
+
         @!section('body')
     </main>
 </body>
