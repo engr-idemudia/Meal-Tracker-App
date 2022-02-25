@@ -1,19 +1,19 @@
 @layout('layouts/main')
 
 @section('title')
-    <title> Sign up - Meal Tracker </title>
+    <title> Sign in - Meal Tracker </title>
 @endsection
 
 @section('body')
   <div class="row">
     <div class="col-5 mx-auto">
-        <h2 class="mb-4"> Create Account</h2>
+        <h2 class="mb-4"> Sign In</h2>
 
-        <form action="/signup" method="POST">   
+        <form action="/signin" method="POST">   
             {{ csrfField() }}
             <div class="mb-4">
                 <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="Email address" value="{{ old('email', '') }}" />
+                <input type="email" class="form-control" name="email" id="email" placeholder="email@example.com" value="{{ old('email', '') }}" />
                 @if(hasErrorFor('email'))
                     <span class="text-danger">{{ getErrorFor('email') }}</span>
                 @endif
@@ -26,7 +26,7 @@
                 @endif
             </div>
             <div>
-                <button type="submit" class="btn btn-primary">Create Account</button>
+                <button type="submit" class="btn btn-primary">Sign in now</button>
             </div>
         </form>
     </div>
