@@ -1,18 +1,17 @@
 'use strict'
 
-class CreateUser {
+class SigninUser {
   get rules () {
      // validation rules
     return {
-      'email': 'required|unique:users',
+      'email': 'required',
       'password': 'required'
     }
   }
 
   get messages() {
     return {
-      'required': '{{ field }} is required.',
-      'unique': '{{ field }} already exists'
+      'required': '{{ field }} is required.'
     }
   }
 
@@ -24,4 +23,4 @@ class CreateUser {
   }
 }
 
-module.exports = CreateUser
+module.exports = SigninUser
