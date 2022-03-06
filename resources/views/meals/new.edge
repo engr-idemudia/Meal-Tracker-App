@@ -1,0 +1,71 @@
+@layout('layouts/main')
+
+@section('title')
+    <title> Add New Meal - Meal Tracker </title>
+@endsection
+
+@section('body')
+    <div class="row">
+        <div class="col-5 mx-auto">
+            <h2 class="mb-4"> Add New Meal Consumption</h2>
+
+            <form action="/meals" method="POST">   
+                {{ csrfField() }}
+                <div class="mb-4 {{ meals.length == 0 ? 'd-none' : ''}}">
+                    <label for="meal-id" class="form-label">Select Meal</label>
+                    <select class="form-select" name="mealId" id="meal-id">
+                        @each(meal in meals)
+                            <option value="{{ meal.id }}">{{ meal.name }}</option>
+                        @endeach
+                        <option value="0">Other</option>
+                    </select>
+                    @if(hasErrorFor('meal_id'))
+                        <span class="text-danger">{{ getErrorFor('meal_id') }}</span>
+                    @endif
+                </div>     
+
+                <div class="mb-4 {{ meals.length == 0 ? '' : 'd-none'}}" id="meal-container">
+                    <label for="meal" class="form-label">Enter Meal</label>
+                    <input type="text" class="form-control" name="meal" id="meal" placeholder="Meal" value="{{ old('meal', '') }}" />
+                    @if(hasErrorFor('meal'))
+                        <span class="text-danger">{{ getErrorFor('meal') }}</span>
+                    @endif
+                </div>
+
+                <div class="mb-4">
+                    <label for="calories" class="form-label">Calories</label>
+                    <input type="number" class="form-control" name="calories" id="calories" placeholder="0" value="{{ old('calories', '') }}" />
+                    @if(hasErrorFor('calories'))
+                        <span class="text-danger">{{ getErrorFor('calories') }}</span>
+                    @endif
+                </div>
+
+                <div class="mb-4">
+                    <label for="rating" class="form-label">Rating</label>
+                    <input type="number" class="form-control" name="rating" id="rating" placeholder="5"  value="{{ old('rating', '') }}" />
+                    @if(hasErrorFor('rating'))
+                        <span class="text-danger">{{ getErrorFor('rating') }}</span>
+                    @endif
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Save </button>
+                </div>
+            </form>
+        </div>
+      </div>
+
+      <script>
+          const mealSelectInput = document.getElementById('meal-id');
+          const mealContainer = document.getElementById('meal-container');
+          mealSelectInput.addEventListener('change', () => {
+            const selectedIndex = mealSelectInput.selectedIndex; 
+            const selectedOption = mealSelectInput.options[selectedIndex];
+            if (selectedOption.value == '0') { // 'Other' option was selected
+                mealContainer.classList.remove('d-none');
+            } else {
+                mealContainer.classList.add('d-none');
+            }
+          });
+      </script>
+@endsection
+

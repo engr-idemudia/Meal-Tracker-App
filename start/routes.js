@@ -1,5 +1,7 @@
 'use strict'
 
+const MealsController = require('../app/Controllers/Http/MealsController');
+
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -24,3 +26,9 @@ Route.get('/signin', 'UsersController.signin')
 Route.post('/signin', 'UsersController.signinUser').validator('SigninUser')
 
 Route.get('/signout', 'UsersController.signout');
+
+// protected route
+Route.group(() => {
+    Route.get('/meals/new', 'MealsController.new');
+    Route.post('/meals', 'MealsController.create').validator('SaveMeal')
+}).middleware(['auth'])
