@@ -42,19 +42,20 @@ class MealsController {
 
 
         session.flash({ success: 'Meal consumption created successfully' });
-        return response.redirect('/');
+        return response.redirect('/meals');
+    }
+
+    async index({ view, auth }) {
+        // fetch meals created by the user and render a template
+        const userMeals = await UserMeal.query().where('user_id', '=', auth.user.id).orderBy('created_at', 'desc').fetch();
+        const meals = await Meal.query().where('id', 'IN', userMeals.rows.map(userMeal => userMeal.meal_id)).fetch();
+        const mealRelationship = meals.rows.reduce((object, meal) => {
+            object[meal.id] = meal;
+            return object;
+        }, {});
+
+        return view.render('meals/index', { userMeals: userMeals.rows, meals: mealRelationship });
     }
 }
 
 module.exports = MealsController
-
-
-// post
-// PostsController
-
-// GET /posts/new => show form to collect input => PostsController.new
-// POST /posts => collect the inout and process => PostsController.create
-
-
-// synchronize
-// asyncronize

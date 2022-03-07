@@ -1,0 +1,33 @@
+
+@layout('layouts/main')
+
+@section('title')
+    <title> Meals - Meal Tracker </title>
+@endsection
+
+@section('body')
+  <h2> My Meals </h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Meal</th>
+        <th scope="col">Calories</th>
+        <th scope="col">Rating</th>
+        <th scope="col">Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+        @each(userMeal in userMeals)
+            <tr>
+                <td>{{ meals[userMeal.meal_id].name }}</td>
+                <td>{{ userMeal.calories }}</td>
+                <td>{{ userMeal.rating }}</td>
+                <td>{{ userMeal.created_at }}</td>
+            </tr>
+        @endeach
+    </tbody>
+  </table>
+@endsection
+
+
