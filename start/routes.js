@@ -18,7 +18,7 @@ const MealsController = require('../app/Controllers/Http/MealsController');
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.get('/', 'HomeController.index')
+Route.get('/', 'HomeController.index') // root route
 Route.get('/signup', 'UsersController.signup')
 Route.post('/signup', 'UsersController.createAccount').validator('CreateUser');
 
@@ -31,4 +31,5 @@ Route.get('/signout', 'UsersController.signout');
 Route.group(() => {
     Route.get('/meals/new', 'MealsController.new');
     Route.post('/meals', 'MealsController.create').validator('SaveMeal')
+    Route.get('/meals', 'MealsController.index')
 }).middleware(['auth'])
