@@ -45,16 +45,20 @@ class MealsController {
         return response.redirect('/meals');
     }
 
-    async index({ view, auth }) {
+    async index({ view, auth, request }) {
         // fetch meals created by the user and render a template
-        const userMeals = await UserMeal.query().where('user_id', '=', auth.user.id).orderBy('created_at', 'desc').fetch();
+        const page = request.input('page', 1)
+        const userMeals = await UserMeal.query()
+            .where('user_id', '=', auth.user.id)
+            .orderBy('created_at', 'desc')
+            .paginate(page, 5);
         const meals = await Meal.query().where('id', 'IN', userMeals.rows.map(userMeal => userMeal.meal_id)).fetch();
         const mealRelationship = meals.rows.reduce((object, meal) => {
             object[meal.id] = meal;
             return object;
         }, {});
 
-        return view.render('meals/index', { userMeals: userMeals.rows, meals: mealRelationship });
+        return view.render('meals/index', { userMeals: userMeals, meals: mealRelationship });
     }
 }
 

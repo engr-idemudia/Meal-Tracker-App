@@ -18,16 +18,62 @@
       </tr>
     </thead>
     <tbody>
-        @each(userMeal in userMeals)
+        @each(userMeal in userMeals.rows)
             <tr>
                 <td>{{ meals[userMeal.meal_id].name }}</td>
                 <td>{{ userMeal.calories }}</td>
                 <td>{{ userMeal.rating }}</td>
-                <td>{{ userMeal.created_at }}</td>
+                <td class="date">{{ userMeal.created_at }}</td>
             </tr>
         @endeach
     </tbody>
   </table>
+
+
+  <div class="mt-5">
+    <div>
+      <span class="me-3">Current Page: <span class="badge rounded-pill bg-warning text-dark">{{ userMeals.pages.page }}</span></span> 
+      <span>Total meals: <span class="badge rounded-pill bg-warning text-dark">{{ userMeals.pages.total }}</span></span>
+    </div>
+
+    @if(userMeals.pages.total > userMeals.pages.perPage)
+      <nav aria-label="Page navigation mt-3">
+        <ul class="pagination justify-content-center">
+          <li class="page-item {{ (userMeals.pages.page - 1) <= 0 ? 'disabled': '' }}">
+            <a class="page-link" href="?page={{ userMeals.pages.page - 1 }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ userMeals.pages.page }}">
+              {{ userMeals.pages.page }}
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ userMeals.pages.page + 1 }}">
+              {{ userMeals.pages.page + 1 }}
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ userMeals.pages.page + 2 }}">
+              {{ userMeals.pages.page + 2 }}
+            </a>
+          </li>
+          <li class="page-item {{ (userMeals.pages.page + 1) >= userMeals.pages.lastPage ? 'disabled' : '' }}">
+            <a class="page-link" href="?page={{ userMeals.pages.page + 4}}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    @endif
+  </div>
+
+  <script>
+    const dates = document.querySelectorAll('.date');
+    dates.forEach((dateElement) => {
+      const formattedDate = moment(new Date(dateElement.innerHTML)).format('MMMM Do YYYY, h:mm:ss a')
+      dateElement.innerHTML = formattedDate;
+    });
+  </script>
 @endsection
-
-
