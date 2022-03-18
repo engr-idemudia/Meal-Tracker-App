@@ -60,6 +60,20 @@ class MealsController {
 
         return view.render('meals/index', { userMeals: userMeals, meals: mealRelationship });
     }
+
+    async delete({ request, auth, session, response }) {
+        const userMealId = request.params.id;
+        const userMeal = await UserMeal.find(userMealId);
+
+        if (userMeal && userMeal.user_id === auth.user.id) {
+            await userMeal.delete();
+            session.flash({ success: 'Meal deleted successfully' });
+        } else  {
+            session.flash({ error: 'Meal not found' });
+        }
+        
+        return response.redirect('/meals');
+    }
 }
 
 module.exports = MealsController
