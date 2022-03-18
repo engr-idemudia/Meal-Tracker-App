@@ -15,6 +15,7 @@
         <th scope="col">Calories</th>
         <th scope="col">Rating</th>
         <th scope="col">Created At</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -24,6 +25,12 @@
                 <td>{{ userMeal.calories }}</td>
                 <td>{{ userMeal.rating }}</td>
                 <td class="date">{{ userMeal.created_at }}</td>
+                <td>
+                  <form action="/meals/{{ userMeal.id }}?_method=DELETE" method="POST">
+                    {{ csrfField() }}
+                    <button type="submit" class="btn btn-danger btn-sm">delete</button>
+                  </form>
+                </td>
             </tr>
         @endeach
     </tbody>
