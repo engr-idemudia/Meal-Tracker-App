@@ -25,7 +25,8 @@
                 <td>{{ userMeal.calories }}</td>
                 <td>{{ userMeal.rating }}</td>
                 <td class="date">{{ userMeal.created_at }}</td>
-                <td>
+                <td class="d-flex">
+                  <a href="/meals/{{ userMeal.id }}/edit" class="btn btn-primary btn-sm me-3">edit</a>
                   <form action="/meals/{{ userMeal.id }}?_method=DELETE" method="POST">
                     {{ csrfField() }}
                     <button type="submit" class="btn btn-danger btn-sm">delete</button>

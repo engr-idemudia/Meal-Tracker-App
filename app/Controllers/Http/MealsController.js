@@ -10,9 +10,9 @@ class MealsController {
         return view.render('meals/new', { meals: meals.rows })
     }
 
-    async create({ view, auth, request, response, session }) {
+    async create({ auth, request, response, session }) {
         const mealParams = request.only(['calories', 'rating', 'meal', 'mealId']);
-        console.log(mealParams);
+
         // validate data
         if (parseInt(mealParams.mealId) == 0) { // 'Other' was selected
             if (!mealParams.meal || mealParams.meal.trim().length <= 0) {
@@ -27,12 +27,13 @@ class MealsController {
         }
 
 
-        // create data
+        // create meal data
         if (parseInt(mealParams.mealId) == 0) {
             const meal = await Meal.create({ name: mealParams.meal });
             mealParams.mealId = meal.id;
         }
 
+        // create user meal
         await UserMeal.create({
             calories: parseInt(mealParams.calories),
             rating: parseInt(mealParams.rating),
@@ -72,6 +73,59 @@ class MealsController {
             session.flash({ error: 'Meal not found' });
         }
         
+        return response.redirect('/meals');
+    }
+
+    async edit({ request, auth, view }) {
+        const userMealId = request.params.id;
+        const userMeal = await UserMeal.find(userMealId);
+
+        if (userMeal && userMeal.user_id === auth.user.id) {
+            const meals = await Meal.all();
+            return view.render('meals/edit', { userMeal, meals: meals.rows });
+        } else  {
+            session.flash({ error: 'Meal not found' });
+        }
+        
+        return response.redirect('/meals');
+    }
+
+    async update({ request, session, response, auth }) {
+        const userMealId = request.params.id;
+        const userMeal = await UserMeal.find(userMealId);
+
+        if (!userMeal || userMeal.user_id !== auth.user.id) {
+            session.flash({ error: 'Meal not found' });
+            return response.redirect('/meals');
+        }
+
+        const mealParams = request.only(['calories', 'rating', 'meal', 'mealId']);
+
+        // validate data
+        if (parseInt(mealParams.mealId) == 0) { // 'Other' was selected
+            if (!mealParams.meal || mealParams.meal.trim().length <= 0) { 
+                session.flash({ error: 'Meal must be provided' });
+                return response.redirect(`/meals/${userMeal.id}/edit`);
+            }
+        }
+
+        if (parseInt(mealParams.rating) > 5 || parseInt(mealParams.rating) < 0) {
+            session.flash({ error: 'Rating must be between 1 and 5' });
+            return response.redirect(`/meals/${userMeal.id}/edit`);
+        }
+
+        // create meal data
+         if (parseInt(mealParams.mealId) == 0) {
+            const meal = await Meal.create({ name: mealParams.meal });
+            mealParams.mealId = meal.id;
+        }
+        
+        userMeal.rating = mealParams.rating;
+        userMeal.calories = mealParams.calories;
+        userMeal.meal_id = mealParams.mealId;
+        await userMeal.save();
+
+        session.flash({ success: 'Meal consumption updated successfully' });
         return response.redirect('/meals');
     }
 }
