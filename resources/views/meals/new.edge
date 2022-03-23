@@ -9,7 +9,7 @@
         <div class="col-5 mx-auto">
             <h2 class="mb-4"> Add New Meal Consumption</h2>
 
-            <form action="/meals" method="POST">   
+            <form action="/meals" method="POST" enctype="multipart/form-data">   
                 {{ csrfField() }}
                 <div class="mb-4 {{ meals.length == 0 ? 'd-none' : ''}}">
                     <label for="meal-id" class="form-label">Select Meal</label>
@@ -47,6 +47,12 @@
                         <span class="text-danger">{{ getErrorFor('rating') }}</span>
                     @endif
                 </div>
+
+                <div class="mb-4">
+                    <label for="rating" class="form-label">Select Image</label>
+                    <input type="file" class="form-control" name="image" id="image" />
+                </div>
+
                 <div>
                     <button type="submit" class="btn btn-primary">Save </button>
                 </div>

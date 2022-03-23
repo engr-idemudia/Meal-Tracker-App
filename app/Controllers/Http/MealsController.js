@@ -1,5 +1,6 @@
 'use strict'
 
+const Drive = use('Drive')
 const Meal = use('App/Models/Meal');
 const UserMeal = use('App/Models/UserMeal');
 
@@ -26,7 +27,23 @@ class MealsController {
             return response.redirect('/meals/new');
         }
 
+        const image = request.file('image', {
+            types: ['image'],
+            size: '500kb'
+        });
+        let imageContent = null;
 
+        if (image) {
+            image._validateFn();
+
+            if (image.status == 'error') {
+                session.flash({ error: 'File must be an image and not more than 500kb' });
+                return response.redirect('/meals/new');
+            }
+
+            imageContent = await Drive.get(image.tmpPath);
+        }
+        
         // create meal data
         if (parseInt(mealParams.mealId) == 0) {
             const meal = await Meal.create({ name: mealParams.meal });
@@ -38,7 +55,10 @@ class MealsController {
             calories: parseInt(mealParams.calories),
             rating: parseInt(mealParams.rating),
             meal_id: parseInt(mealParams.mealId),
-            user_id: auth.user.id
+            user_id: auth.user.id,
+            file_name: image ? image.clientName : null,
+            file_blob: image ? imageContent.toString('base64') : null,
+            file_ext: image ? image.extname : null
         });
 
 
@@ -53,6 +73,7 @@ class MealsController {
             .where('user_id', '=', auth.user.id)
             .orderBy('created_at', 'desc')
             .paginate(page, 5);
+
         const meals = await Meal.query().where('id', 'IN', userMeals.rows.map(userMeal => userMeal.meal_id)).fetch();
         const mealRelationship = meals.rows.reduce((object, meal) => {
             object[meal.id] = meal;
@@ -112,6 +133,26 @@ class MealsController {
         if (parseInt(mealParams.rating) > 5 || parseInt(mealParams.rating) < 0) {
             session.flash({ error: 'Rating must be between 1 and 5' });
             return response.redirect(`/meals/${userMeal.id}/edit`);
+        }
+
+        const image = request.file('image', {
+            types: ['image'],
+            size: '500kb'
+        });
+        let imageContent = null;
+
+        if (image) {
+            image._validateFn();
+
+            if (image.status == 'error') {
+                session.flash({ error: 'File must be an image and not more than 500kb' });
+                return response.redirect('/meals/new');
+            }
+
+            imageContent = await Drive.get(image.tmpPath);
+            userMeal.file_name = image.clientName;
+            userMeal.file_blob = imageContent.toString('base64');
+            userMeal.file_ext = image.extname; 
         }
 
         // create meal data
