@@ -9,7 +9,7 @@
     <div class="col-5 mx-auto">
         <h2 class="mb-4"> Edit Meal Consumption</h2>
 
-        <form action="/meals/{{ userMeal.id}}/update?_method=PUT" method="POST">   
+        <form action="/meals/{{ userMeal.id}}/update?_method=PUT" method="POST" enctype="multipart/form-data">   
             {{ csrfField() }}
             <div class="mb-4 {{ meals.length == 0 ? 'd-none' : ''}}">
                 <label for="meal-id" class="form-label">Select Meal</label>
@@ -47,6 +47,18 @@
                     <span class="text-danger">{{ getErrorFor('rating') }}</span>
                 @endif
             </div>
+
+            @if(userMeal.file_name)
+                <div class="mb-4">
+                    <img src="data:image/{{ userMeal.file_ext }};base64,{{ userMeal.file_blob }}" width="200" />
+                </div>
+            @endif
+
+            <div class="mb-4">
+                <label for="rating" class="form-label">Select Image</label>
+                <input type="file" class="form-control" name="image" id="image" />
+            </div>
+
             <div>
                 <button type="submit" class="btn btn-primary">Save </button>
             </div>
