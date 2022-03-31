@@ -11,19 +11,19 @@ class MealsController {
         return view.render('meals/new', { meals: meals.rows })
     }
 
-    async create({ auth, request, response, session }) {
+    async create({ auth, request, response, session, antl }) {
         const mealParams = request.only(['calories', 'rating', 'meal', 'mealId']);
 
         // validate data
         if (parseInt(mealParams.mealId) == 0) { // 'Other' was selected
             if (!mealParams.meal || mealParams.meal.trim().length <= 0) {
-                session.flash({ error: 'Meal must be provided' });
+                session.flash({ error: antl.formatMessage('flash_messages.meals_invalid_meal') });
                 return response.redirect('/meals/new');
             }
         }
 
         if (parseInt(mealParams.rating) > 5 || parseInt(mealParams.rating) < 0) {
-            session.flash({ error: 'Rating must be between 1 and 5' });
+            session.flash({ error: antl.formatMessage('flash_messages.meals_invalid_rating') });
             return response.redirect('/meals/new');
         }
 
@@ -37,7 +37,7 @@ class MealsController {
             image._validateFn();
 
             if (image.status == 'error') {
-                session.flash({ error: 'File must be an image and not more than 500kb' });
+                session.flash({ error: antl.formatMessage('flash_messages.meals_invalid_file') });
                 return response.redirect('/meals/new');
             }
 
@@ -62,11 +62,15 @@ class MealsController {
         });
 
 
-        session.flash({ success: 'Meal consumption created successfully' });
+        session.flash({ success: antl.formatMessage('flash_messages.meals_create_success') });
         return response.redirect('/meals');
     }
 
-    async index({ view, auth, request }) {
+    async index({ view, auth, request, response }) {
+        if (!auth.user) {
+            return response.redirect('/signin');
+        }
+
         // fetch meals created by the user and render a template
         const page = request.input('page', 1)
         const userMeals = await UserMeal.query()
@@ -83,21 +87,21 @@ class MealsController {
         return view.render('meals/index', { userMeals: userMeals, meals: mealRelationship });
     }
 
-    async delete({ request, auth, session, response }) {
+    async delete({ request, auth, session, response, antl }) {
         const userMealId = request.params.id;
         const userMeal = await UserMeal.find(userMealId);
 
         if (userMeal && userMeal.user_id === auth.user.id) {
             await userMeal.delete();
-            session.flash({ success: 'Meal deleted successfully' });
+            session.flash({ success: antl.formatMessage('flash_messages.meals_delete_success') });
         } else  {
-            session.flash({ error: 'Meal not found' });
+            session.flash({ error: antl.formatMessage('flash_messages.meals_not_found') });
         }
         
         return response.redirect('/meals');
     }
 
-    async edit({ request, auth, view }) {
+    async edit({ request, auth, view, antl }) {
         const userMealId = request.params.id;
         const userMeal = await UserMeal.find(userMealId);
 
@@ -105,18 +109,18 @@ class MealsController {
             const meals = await Meal.all();
             return view.render('meals/edit', { userMeal, meals: meals.rows });
         } else  {
-            session.flash({ error: 'Meal not found' });
+            session.flash({ error: antl.formatMessage('flash_messages.meals_not_found') });
         }
         
         return response.redirect('/meals');
     }
 
-    async update({ request, session, response, auth }) {
+    async update({ request, session, response, auth, antl }) {
         const userMealId = request.params.id;
         const userMeal = await UserMeal.find(userMealId);
 
         if (!userMeal || userMeal.user_id !== auth.user.id) {
-            session.flash({ error: 'Meal not found' });
+            session.flash({ error: antl.formatMessage('flash_messages.meals_not_found') });
             return response.redirect('/meals');
         }
 
@@ -125,13 +129,13 @@ class MealsController {
         // validate data
         if (parseInt(mealParams.mealId) == 0) { // 'Other' was selected
             if (!mealParams.meal || mealParams.meal.trim().length <= 0) { 
-                session.flash({ error: 'Meal must be provided' });
+                session.flash({ error: antl.formatMessage('flash_messages.meals_invalid_meal') });
                 return response.redirect(`/meals/${userMeal.id}/edit`);
             }
         }
 
         if (parseInt(mealParams.rating) > 5 || parseInt(mealParams.rating) < 0) {
-            session.flash({ error: 'Rating must be between 1 and 5' });
+            session.flash({ error: antl.formatMessage('flash_messages.meals_invalid_rating') });
             return response.redirect(`/meals/${userMeal.id}/edit`);
         }
 
@@ -145,7 +149,7 @@ class MealsController {
             image._validateFn();
 
             if (image.status == 'error') {
-                session.flash({ error: 'File must be an image and not more than 500kb' });
+                session.flash({ error: antl.formatMessage('flash_messages.meals_invalid_file') });
                 return response.redirect('/meals/new');
             }
 
@@ -166,7 +170,7 @@ class MealsController {
         userMeal.meal_id = mealParams.mealId;
         await userMeal.save();
 
-        session.flash({ success: 'Meal consumption updated successfully' });
+        session.flash({ success: antl.formatMessage('flash_messages.meals_update_success') });
         return response.redirect('/meals');
     }
 }

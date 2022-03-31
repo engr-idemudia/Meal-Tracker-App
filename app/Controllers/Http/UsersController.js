@@ -9,10 +9,10 @@ class UsersController {
     }
 
      // POST /signup
-    async createAccount({ request, response, session }) {
+    async createAccount({ request, response, session, antl }) {
         await User.create(request.only(['email', 'password']))
 
-        session.flash({ success: "Signed up successfully" })
+        session.flash({ success: antl.formatMessage('flash_messages.sign_up_success') })
         return response.redirect('/');
     }
 
@@ -22,23 +22,23 @@ class UsersController {
     }
 
      // PUT /signin
-    async signinUser({ request, auth, response, session }) {
+    async signinUser({ request, auth, response, session, antl }) {
         const { email, password } = request.only(['email', 'password']);
 
         try {
             await auth.attempt(email, password); // sign user in
-            session.flash({ success: 'Signed in successfully.'});
+            session.flash({ success:  antl.formatMessage('flash_messages.sign_in_success') });
             return response.redirect('/');
         } catch (error) {
-            session.flash({ error: 'Invalid email or password' })
+            session.flash({ error: antl.formatMessage('flash_messages.sign_in_error') })
             return response.redirect('back');
         }    
     }
 
     // GET /signout
-    async signout ({ auth, response, session }) {
+    async signout ({ auth, response, session, antl }) {
         await auth.logout(); // sign user out
-        session.flash({ success: 'Signed out successfully.'});
+        session.flash({ success: antl.formatMessage('flash_messages.sign_out_success') });
         return response.redirect('/');
     }
 }

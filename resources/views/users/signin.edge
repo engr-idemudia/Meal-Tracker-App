@@ -1,32 +1,32 @@
 @layout('layouts/main')
 
 @section('title')
-    <title> Sign in - Meal Tracker </title>
+    <title> {{ antl.formatMessage('users.sign_in') }}- Meal Tracker </title>
 @endsection
 
 @section('body')
   <div class="row">
     <div class="col-5 mx-auto">
-        <h2 class="mb-4"> Sign In</h2>
+        <h2 class="mb-4"> {{ antl.formatMessage('users.sign_in') }}</h2>
 
         <form action="/signin" method="POST">   
             {{ csrfField() }}
             <div class="mb-4">
-                <label for="email" class="form-label">Email address</label>
+                <label for="email" class="form-label">{{ antl.formatMessage('users.email_address') }}</label>
                 <input type="email" class="form-control" name="email" id="email" placeholder="email@example.com" value="{{ old('email', '') }}" />
                 @if(hasErrorFor('email'))
                     <span class="text-danger">{{ getErrorFor('email') }}</span>
                 @endif
             </div>
             <div class="mb-4">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" name="password" id="password" placeholder="Password"  value="{{ old('password', '') }}" />
+                <label for="password" class="form-label">{{ antl.formatMessage('users.password') }}</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="{{ antl.formatMessage('users.password') }}"  value="{{ old('password', '') }}" />
                 @if(hasErrorFor('password'))
                     <span class="text-danger">{{ getErrorFor('password') }}</span>
                 @endif
             </div>
             <div>
-                <button type="submit" class="btn btn-primary">Sign in now</button>
+                <button type="submit" class="btn btn-primary">{{ antl.formatMessage('users.sign_in_now') }}</button>
             </div>
         </form>
     </div>

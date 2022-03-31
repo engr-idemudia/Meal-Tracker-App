@@ -1,23 +1,23 @@
 @layout('layouts/main')
 
 @section('title')
-    <title> Add New Meal - Meal Tracker </title>
+    <title>{{ antl.formatMessage('meals.add_meal') }} - Meal Tracker </title>
 @endsection
 
 @section('body')
     <div class="row">
         <div class="col-5 mx-auto">
-            <h2 class="mb-4"> Add New Meal Consumption</h2>
+            <h2 class="mb-4">{{ antl.formatMessage('meals.add_new_meal_consumption') }}</h2>
 
             <form action="/meals" method="POST" enctype="multipart/form-data">   
                 {{ csrfField() }}
                 <div class="mb-4 {{ meals.length == 0 ? 'd-none' : ''}}">
-                    <label for="meal-id" class="form-label">Select Meal</label>
+                    <label for="meal-id" class="form-label">{{ antl.formatMessage('meals.select_meal') }}</label>
                     <select class="form-select" name="mealId" id="meal-id">
                         @each(meal in meals)
                             <option value="{{ meal.id }}">{{ meal.name }}</option>
                         @endeach
-                        <option value="0">Other</option>
+                        <option value="0">{{ antl.formatMessage('meals.other') }}</option>
                     </select>
                     @if(hasErrorFor('meal_id'))
                         <span class="text-danger">{{ getErrorFor('meal_id') }}</span>
@@ -25,15 +25,15 @@
                 </div>     
 
                 <div class="mb-4 {{ meals.length == 0 ? '' : 'd-none'}}" id="meal-container">
-                    <label for="meal" class="form-label">Enter Meal</label>
-                    <input type="text" class="form-control" name="meal" id="meal" placeholder="Meal" value="{{ old('meal', '') }}" />
+                    <label for="meal" class="form-label">{{ antl.formatMessage('meals.enter_meal') }}</label>
+                    <input type="text" class="form-control" name="meal" id="meal" placeholder="{{ antl.formatMessage('meals.meal') }}" value="{{ old('meal', '') }}" />
                     @if(hasErrorFor('meal'))
                         <span class="text-danger">{{ getErrorFor('meal') }}</span>
                     @endif
                 </div>
 
                 <div class="mb-4">
-                    <label for="calories" class="form-label">Calories</label>
+                    <label for="calories" class="form-label">{{ antl.formatMessage('meals.calories') }}</label>
                     <input type="number" class="form-control" name="calories" id="calories" placeholder="0" value="{{ old('calories', '') }}" />
                     @if(hasErrorFor('calories'))
                         <span class="text-danger">{{ getErrorFor('calories') }}</span>
@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="rating" class="form-label">Rating</label>
+                    <label for="rating" class="form-label">{{ antl.formatMessage('meals.rating') }}</label>
                     <input type="number" class="form-control" name="rating" id="rating" placeholder="5"  value="{{ old('rating', '') }}" />
                     @if(hasErrorFor('rating'))
                         <span class="text-danger">{{ getErrorFor('rating') }}</span>
@@ -49,12 +49,12 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="rating" class="form-label">Select Image</label>
+                    <label for="rating" class="form-label">{{ antl.formatMessage('meals.select_image') }}</label>
                     <input type="file" class="form-control" name="image" id="image" />
                 </div>
 
                 <div>
-                    <button type="submit" class="btn btn-primary">Save </button>
+                    <button type="submit" class="btn btn-primary">{{ antl.formatMessage('meals.save') }}</button>
                 </div>
             </form>
         </div>

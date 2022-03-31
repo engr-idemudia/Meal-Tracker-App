@@ -2,20 +2,20 @@
 @layout('layouts/main')
 
 @section('title')
-    <title> Meals - Meal Tracker </title>
+    <title> {{ antl.formatMessage('meals.meals') }} - Meal Tracker </title>
 @endsection
 
 @section('body')
-  <h2> My Meals </h2>
+  <h2>{{ antl.formatMessage('meals.my_meals') }} </h2>
 
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">Image</th>
-        <th scope="col">Meal</th>
-        <th scope="col">Calories</th>
-        <th scope="col">Rating</th>
-        <th scope="col">Created At</th>
+        <th scope="col">{{ antl.formatMessage('meals.image') }}</th>
+        <th scope="col">{{ antl.formatMessage('meals.meal') }}</th>
+        <th scope="col">{{ antl.formatMessage('meals.calories') }}</th>
+        <th scope="col">{{ antl.formatMessage('meals.rating') }}</th>
+        <th scope="col">{{ antl.formatMessage('meals.created_at') }}</th>
         <th scope="col"></th>
       </tr>
     </thead>
@@ -33,10 +33,10 @@
                 <td class="date">{{ userMeal.created_at }}</td>
                 <td>
                   <div class="d-flex">
-                    <a href="/meals/{{ userMeal.id }}/edit" class="btn btn-primary btn-sm me-3">edit</a>
-                    <form action="/meals/{{ userMeal.id }}?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure?')">
+                    <a href="/meals/{{ userMeal.id }}/edit" class="btn btn-primary btn-sm me-3">{{ antl.formatMessage('meals.edit') }}</a>
+                    <form action="/meals/{{ userMeal.id }}?_method=DELETE" method="POST" onsubmit="return confirm(\'{{ antl.formatMessage('meals.confirm_delete') }}\')">
                       {{ csrfField() }}
-                      <button type="submit" class="btn btn-danger btn-sm">delete</button>
+                      <button type="submit" class="btn btn-danger btn-sm">{{ antl.formatMessage('meals.delete') }}</button>
                     </form>
                   </div>
                 </td>
@@ -48,8 +48,8 @@
 
   <div class="mt-5">
     <div>
-      <span class="me-3">Current Page: <span class="badge rounded-pill bg-warning text-dark">{{ userMeals.pages.page }}</span></span> 
-      <span>Total meals: <span class="badge rounded-pill bg-warning text-dark">{{ userMeals.pages.total }}</span></span>
+      <span class="me-3">{{ antl.formatMessage('meals.current_page') }}: <span class="badge rounded-pill bg-warning text-dark">{{ userMeals.pages.page }}</span></span> 
+      <span>{{ antl.formatMessage('meals.total_meals') }}: <span class="badge rounded-pill bg-warning text-dark">{{ userMeals.pages.total }}</span></span>
     </div>
 
     @if(userMeals.pages.total > userMeals.pages.perPage)
