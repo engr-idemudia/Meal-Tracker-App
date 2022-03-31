@@ -239,5 +239,12 @@ module.exports = {
     sameSite: false,
     path: '/',
     maxAge: 7200
+  },
+
+
+  //localization
+  locales: {
+    loader: 'file',
+    locale: 'en'
   }
 }

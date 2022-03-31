@@ -1,0 +1,13 @@
+{
+    "sign_in_success":  "Connexion réussie",
+    "sign_out_success": "Déconnecté avec succès",
+    "sign_up_success": "Inscription réussie",
+    "sign_in_error": "email ou mot de passe invalide",
+    "meals_invalid_meal": "Le repas doit être fourni",
+    "meals_invalid_rating": "La note doit être comprise entre 1 et 5",
+    "meals_invalid_file": "Le fichier doit être une image et pas plus, de 500 Ko",
+    "meals_create_success": "Consommation de repas créée avec succès",
+    "meals_delete_success": "Repas supprimé avec succès",
+    "meals_not_found": "Repas introuvable",
+    "meals_update_success": "Consommation de repas mise à jour avec succès"
+}

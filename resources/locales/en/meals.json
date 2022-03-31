@@ -1,0 +1,23 @@
+{
+    "add_meal": "Add New Meal",
+    "add_new_meal_consumption": "Add New Meal Consumption",
+    "edit_meal": "Edit Meal",
+    "edit_meal_consumpton": "Edit Meal Consumption",
+    "enter_meal": "Enter Meal",
+    "select_meal": "Select Meal",
+    "calories": "Calories",
+    "rating": "Rating",
+    "select_image": "Select Image",
+    "save": "Save",
+    "other": "Other",
+    "meal": "Meal",
+    "meals": "Meals",
+    "my_meals": "My Meals",
+    "image": "Image",
+    "created_at": "Created At",
+    "edit": "Edit",
+    "delete": "Delete",
+    "current_page": "Current Page",
+    "total_meals": "Total Meals",
+    "confirm_delete": "Are you sure?"
+}

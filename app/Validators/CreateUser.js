@@ -11,8 +11,8 @@ class CreateUser {
 
   get messages() {
     return {
-      'required': '{{ field }} is required.',
-      'unique': '{{ field }} already exists'
+      'required': `{{ field }} ${this.ctx.antl.formatMessage('common.is_required') }`,
+      'unique': `{{ field }} ${this.ctx.antl.formatMessage('common.already_exists') }`
     }
   }
 

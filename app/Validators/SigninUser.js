@@ -11,7 +11,7 @@ class SigninUser {
 
   get messages() {
     return {
-      'required': '{{ field }} is required.'
+      'required': `{{ field }} ${this.ctx.antl.formatMessage('common.is_required') }`
     }
   }
 

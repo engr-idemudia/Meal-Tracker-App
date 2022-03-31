@@ -1,0 +1,13 @@
+{
+    "sign_in_success":  "Signed in successfully",
+    "sign_out_success": "Signed out successfully",
+    "sign_up_success": "Signed up successfully.",
+    "sign_in_error": "Invalid email or password",
+    "meals_invalid_meal": "Meal must be provided",
+    "meals_invalid_rating": "Rating must be between 1 and 5",
+    "meals_invalid_file": "File must be an image and not more than 500kb",
+    "meals_create_success": "Meal consumption created successfully",
+    "meals_delete_success": "Meal deleted successfully",
+    "meals_not_found": "Meal not found",
+    "meals_update_success": "Meal consumption updated successfully"
+}

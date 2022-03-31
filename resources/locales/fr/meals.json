@@ -1,0 +1,23 @@
+{
+    "add_meal": "Ajouter un nouveau repas",
+    "add_new_meal_consumption": "Ajouter une nouvelle consommation de repas",
+    "edit_meal": "Modifier le repas",
+    "edit_meal_consumpton": "Modifier la consommation de repas",
+    "select_meal": "Sélectionnez le repas",
+    "enter_meal": "Entrez le repas",
+    "calories": "Calories",
+    "rating": "Notation",
+    "select_image": "Sélectionner une image",
+    "save": "enregistrer",
+    "other": "Autre",
+    "meal": "Repas",
+    "meals": "Repas",
+    "my_meals": "Mes repas",
+    "image": "Image",
+    "created_at": "Créé à",
+    "edit": "Éditer",
+    "delete": "Supprimer",
+    "current_page": "Page actuelle",
+    "total_meals": "Repas totaux",
+    "confirm_delete": "Êtes-vous sûr?"
+}   
