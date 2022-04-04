@@ -1,33 +1,37 @@
 @layout('layouts/main')
 
 @section('title')
-    <title> Reports - Meal Tracker </title>
+    <title> {{ antl.formatMessage('report.reports') }} - Meal Tracker </title>
 @endsection
 
 @section('body')
-    <h2 class="mb-4"> Meal Reports - {{ auth.user.email }}</h2>
+    <h2 class="mb-4"> {{ antl.formatMessage('report.meal_reports') }} </h2>
 
-    <div id="error-msg" class="text-danger mb-3 d-none">Date cannot be in the future</div>
+    <!--  custom properties -->
+    <div id="error-msg" 
+      data-future-date-error="{{ antl.formatMessage('report.future_date_error') }}"
+      data-start-date-greater-error="{{ antl.formatMessage('report.start_date_greater_error') }}"
+      class="text-danger mb-3 d-none"></div> 
 
-    <form class="d-flex align-items-end mb-5" id="date-form">
-        <div class="me-5">
-            <label for="start-date" class="form-label mb-1">Start date</label>
+    <form class="d-md-flex align-items-end mb-5" id="date-form">
+        <div class="me-0 me-md-5 mb-3 mb-md-0">
+            <label for="start-date" class="form-label mb-1">{{ antl.formatMessage('report.start_date') }}</label>
             <input id="start-date" name="start_date" class="form-control" type="date" value="{{ startDate }}" />
         </div>
-        <div class="me-5">
-            <label for="end-date" class="form-label mb-1">End date</label>
+        <div class="me-0 me-md-5 mb-3 mb-md-0">
+            <label for="end-date" class="form-label mb-1">{{ antl.formatMessage('report.end_date') }}</label>
             <input id="end-date" name="end_date" class="form-control" type="date" value="{{ endDate }}" />
         </div>
         <div>
-            <button type="submit" class="btn btn-success btn-sm me-2">Filter</button>
-            <button class="btn btn-dark btn-sm" id="clear-btn">Clear</button>
+            <button type="submit" class="btn btn-success btn-sm me-2">{{ antl.formatMessage('report.filter') }}</button>
+            <button class="btn btn-dark btn-sm" id="clear-btn">{{ antl.formatMessage('report.clear') }}</button>
         </div>
     </form>
 
     <div class="card-group mb-5">
         <div class="card bg-light">
             <div class="card-body">
-                <h5 class="card-title">Most consumed meal</h5>
+                <h5 class="card-title">{{ antl.formatMessage('report.most_consumed_meal') }}</h5>
                 <p class="card-text">
                     {{ mostConsumedMeal.meal.name }}
                     <span class="badge rounded-pill bg-warning text-dark ms-2">{{ mostConsumedMeal.total_count }}</span>
@@ -36,7 +40,7 @@
         </div>
         <div class="card bg-light">
             <div class="card-body">
-                <h5 class="card-title">Highest Calory meal</h5>
+                <h5 class="card-title">{{ antl.formatMessage('report.highest_calory_meal') }}</h5>
                 <p class="card-text">
                     {{ highestCaloryMeal.meal.name }}
                     <span class="badge rounded-pill bg-warning text-dark ms-2">{{ highestCaloryMeal.total_calories }}</span>
@@ -45,7 +49,7 @@
         </div>
         <div class="card bg-light">
             <div class="card-body">
-                <h5 class="card-title">Favorite meal</h5>
+                <h5 class="card-title">{{ antl.formatMessage('report.favourite_meal') }}</h5>
                 <p class="card-text">
                     {{ favoriteMeal.meal.name }}
                     <span class="badge rounded-pill bg-warning text-dark ms-2 rating">{{ favoriteMeal.average_rating }}</span>
@@ -57,10 +61,10 @@
     <table class="table">
         <thead>
             <tr>
-            <th scope="col">Meal <span class="badge rounded-pill bg-warning text-dark ms-2">{{ totals.unique_meals }}</span></th>
-            <th scope="col">Total Consumption <span class="badge rounded-pill bg-warning text-dark ms-2">{{ totals.total_count }}</span></th>
-            <th scope="col">Total Calories <span class="badge rounded-pill bg-warning text-dark ms-2">{{ totals.total_calories }}</span></th>
-            <th scope="col">Average Rating <span class="badge rounded-pill bg-warning text-dark ms-2 rating">{{ totals.average_rating }}</span></th>
+            <th scope="col">{{ antl.formatMessage('report.meal') }} <span class="badge rounded-pill bg-warning text-dark ms-2">{{ totals.unique_meals }}</span></th>
+            <th scope="col">{{ antl.formatMessage('report.total_consumption') }} <span class="badge rounded-pill bg-warning text-dark ms-2">{{ totals.total_count }}</span></th>
+            <th scope="col">{{ antl.formatMessage('report.total_calories') }} <span class="badge rounded-pill bg-warning text-dark ms-2">{{ totals.total_calories }}</span></th>
+            <th scope="col">{{ antl.formatMessage('report.average_rating') }} <span class="badge rounded-pill bg-warning text-dark ms-2 rating">{{ totals.average_rating }}</span></th>
         </tr>
         </thead>
         <tbody>
@@ -127,20 +131,15 @@
             const startDate = new Date(startDateElement.value);
             const endDate = new Date(endDateElement.value);
 
-            if ((startDateElement.value && startDate.toString() === 'Invalid Date') || (endDateElement.value && endDate.toString() === 'Invalid Date')) {
-                event.preventDefault(); // stop form submission
-                errorMessageElement.classList.remove("d-none");
-                errorMessageElement.textContent = "Invalid date(s)";
-                return;
-            } else if (startDate > today || endDate > today) { // date are in the future
+            if (startDate > today || endDate > today) { // date are in the future
                 event.preventDefault();
                 errorMessageElement.classList.remove("d-none");
-                errorMessageElement.textContent = "Dates cannot be in the future";
+                errorMessageElement.textContent = errorMessageElement.dataset.futureDateError;
                 return;
             } else if (startDate > endDate) {
                 event.preventDefault(); // stop form submission
                 errorMessageElement.classList.remove("d-none");
-                errorMessageElement.textContent = "Start date cannot be ahead of end date";
+                errorMessageElement.textContent = errorMessageElement.dataset.startDateGreaterError;
                 return;
             }
         });

@@ -8,6 +8,8 @@
     "calories": "Calories",
     "rating": "Notation",
     "select_image": "Sélectionner une image",
+    "choose_file": "Choisir le fichier",
+    "no_file_selected": "Aucun fichier sélectionné",
     "save": "enregistrer",
     "other": "Autre",
     "meal": "Repas",
@@ -19,5 +21,6 @@
     "delete": "Supprimer",
     "current_page": "Page actuelle",
     "total_meals": "Repas totaux",
-    "confirm_delete": "Êtes-vous sûr?"
+    "confirm_delete": "Êtes-vous sûr?",
+    "no_file_chosen": "Aucun fichier n'est supprimé"
 }   

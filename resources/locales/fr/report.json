@@ -1,0 +1,17 @@
+{
+    "reports": "Rapports",
+    "meal_reports": "Rapports de repas",
+    "start_date": "Date de début",
+    "end_date": "Date de fin",
+    "filter": "Filtre",
+    "clear": "Dégager",
+    "most_consumed_meal": "Repas le plus consommé",
+    "highest_calory_meal": "Repas le plus calorique",
+    "favourite_meal": "Plat préféré",
+    "meal": "Repas",
+    "total_consumption": "Consommation totale",
+    "total_calories": "Calories totales",
+    "average_rating": "Note moyenne",
+    "future_date_error": "La date ne peut pas être dans le futur",
+    "start_date_greater_error": "La date de début ne peut pas être antérieure à la date de fin"
+}

@@ -13,21 +13,31 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        < div class="container">
+        <div class="container">
             <a class="navbar-brand" href="/">Meal Tracker</a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
             
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ms-auto">
                     @loggedIn
                         <a class="nav-link" href="/meals">{{ antl.formatMessage('navbar.my_meals') }}</a>
-                        <a class="nav-link" href="/meals/new">{{ antl.formatMessage('navbar.add_meal') }}</a>
-                        <a class="nav-link" href="/reports">Reports</a>
+                        <a class="nav-link" href="/reports">{{ antl.formatMessage('report.reports') }}</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ antl.formatMessage('navbar.language') }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="langDropdown">
+                              <li><a class="dropdown-item" href="?lang=en">{{ antl.formatMessage('navbar.english') }}</a></li>
+                              <li><a class="dropdown-item" href="?lang=fr">{{ antl.formatMessage('navbar.french') }}</a></li>
+                              <li><a class="dropdown-item" href="?lang=ee">{{ antl.formatMessage('navbar.estonia') }}</a></li>
+                            </ul>
+                        </li>
                         <a class="nav-link" href="/signout">{{ antl.formatMessage('navbar.sign_out') }}</a>
-                        @else
+                        <span class="navbar-text">{{ auth.user.email }}</span>
+                    @else
                         <a class="nav-link" href="/signin">{{ antl.formatMessage('navbar.sign_in') }}</a>
                         <a class="nav-link" href="/signup">{{ antl.formatMessage('navbar.sign_up') }}</a>
                     @endloggedIn

@@ -6,7 +6,10 @@
 @endsection
 
 @section('body')
-  <h2>{{ antl.formatMessage('meals.my_meals') }} </h2>
+  <div class="d-flex justify-content-between align-items-center mb-5">
+    <h2>{{ antl.formatMessage('meals.my_meals') }} </h2>
+    <a href="/meals/new" class="btn btn-primary">{{ antl.formatMessage('navbar.add_meal') }}</a>
+  </div>
 
   <table class="table">
     <thead>
@@ -33,7 +36,7 @@
                 <td class="date">{{ userMeal.created_at }}</td>
                 <td>
                   <div class="d-flex">
-                    <a href="/meals/{{ userMeal.id }}/edit" class="btn btn-primary btn-sm me-3">{{ antl.formatMessage('meals.edit') }}</a>
+                    <a href="/meals/{{ userMeal.id }}/edit" class="btn btn-dark btn-sm me-3">{{ antl.formatMessage('meals.edit') }}</a>
                     <form action="/meals/{{ userMeal.id }}?_method=DELETE" method="POST" onsubmit="return confirm(\'{{ antl.formatMessage('meals.confirm_delete') }}\')">
                       {{ csrfField() }}
                       <button type="submit" class="btn btn-danger btn-sm">{{ antl.formatMessage('meals.delete') }}</button>
