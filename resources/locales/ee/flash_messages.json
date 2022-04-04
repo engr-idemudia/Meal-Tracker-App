@@ -1,0 +1,14 @@
+{
+    "sign_in_success":  "Sisselogimine õnnestus",
+    "sign_out_success": "Väljalogimine õnnestus",
+    "sign_up_success": "Registreerumine õnnestus.",
+    "sign_in_error": "Kehtetu e-posti aadress või parool",
+    "meals_invalid_meal": "Söök tuleb tagada",
+    "meals_invalid_rating": "Hinnang peab olema vahemikus 1 kuni 5",
+    "meals_invalid_file": "Fail peab olema pilt ja mitte suurem kui 500 kb",
+    "meals_create_success": "Söögitarbimine edukalt loodud",
+    "meals_delete_success": "Söögikord kustutati edukalt",
+    "meals_not_found": "Söögikord kustutati lõpuni",
+    "meals_update_success": "Toidu tarbimise värskendamine õnnestus"
+    
+}

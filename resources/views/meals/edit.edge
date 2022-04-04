@@ -54,9 +54,10 @@
                 </div>
             @endif
 
-            <div class="mb-4">
-                <label for="rating" class="form-label">{{ antl.formatMessage('meals.select_image') }}</label>
-                <input type="file" class="form-control" name="image" id="image" />
+            <div class="mb-4 border rounded">
+                <label for="image" class="btn btn-light border-end">{{ antl.formatMessage('meals.select_image') }}</label>
+                <span class="ms-2" id="image-name">{{ antl.formatMessage('meals.no_file_chosen') }}</span>
+                <input type="file" class="form-control d-none" name="image" id="image" />
             </div>
 
             <div>
@@ -67,16 +68,23 @@
   </div>
 
   <script>
-      const mealSelectInput = document.getElementById('meal-id');
-      const mealContainer = document.getElementById('meal-container');
-      mealSelectInput.addEventListener('change', () => {
-        const selectedIndex = mealSelectInput.selectedIndex; 
-        const selectedOption = mealSelectInput.options[selectedIndex];
-        if (selectedOption.value == '0') { // 'Other' option was selected
-            mealContainer.classList.remove('d-none');
-        } else {
-            mealContainer.classList.add('d-none');
-        }
-      });
+        const mealSelectInput = document.getElementById('meal-id');
+        const mealContainer = document.getElementById('meal-container');
+        mealSelectInput.addEventListener('change', () => {
+            const selectedIndex = mealSelectInput.selectedIndex; 
+            const selectedOption = mealSelectInput.options[selectedIndex];
+            if (selectedOption.value == '0') { // 'Other' option was selected
+                mealContainer.classList.remove('d-none');
+            } else {
+                mealContainer.classList.add('d-none');
+            }
+        });
+
+        const imageFileElement = document.getElementById("image");
+        const imageNameElement = document.getElementById("image-name");
+
+        imageFileElement.addEventListener('change', function (event) {
+            imageNameElement.textContent = imageFileElement.files[0].name;
+        });
   </script>
 @endsection

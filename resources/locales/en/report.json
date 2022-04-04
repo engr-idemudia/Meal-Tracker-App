@@ -1,0 +1,17 @@
+{
+    "reports": "Reports",
+    "meal_reports": "Meal Reports",
+    "start_date": "Start Date",
+    "end_date": "End Date",
+    "filter": "Filter",
+    "clear": "Clear",
+    "most_consumed_meal": "Most Consumed Meal",
+    "highest_calory_meal": "Highest Calory Meal",
+    "favourite_meal": "Favourite Meal",
+    "meal": "Meal",
+    "total_consumption": "Total Consumption",
+    "total_calories": "Total Calories",
+    "average_rating": "Average Rating",
+    "future_date_error": "Dates cannot be in the future",
+    "start_date_greater_error": "Start date cannot be ahead of end date"
+}

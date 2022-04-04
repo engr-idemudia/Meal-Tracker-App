@@ -37,4 +37,6 @@ Route.group(() => {
 
     Route.get('/meals/:id/edit', 'MealsController.edit')
     Route.put('/meals/:id/update', 'MealsController.update').validator('SaveMeal');
+    
+    Route.get('/reports', 'ReportsController.index')
 }).middleware(['auth'])

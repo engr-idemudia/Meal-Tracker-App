@@ -1,0 +1,18 @@
+{
+    
+    "reports": "Aruanded",
+    "meal_reports": "Söögiaruanded",
+    "start_date": "Algus kuupäev",
+    "end_date": "lõppkuupäev",
+    "filter": "Filter",
+    "clear": "Selge",
+    "most_consumed_meal": "Enim tarbitud söök",
+    "highest_calory_meal": "Kõrgeima kalorsusega eine",
+    "favourite_meal": "Lemmik söök",
+    "meal": "sööki",
+    "total_consumption": "Kogutarbimine",
+    "total_calories": "Kalorid kokku",
+    "average_rating": "Keskmine hinne",
+    "future_date_error": "Kuupäev ei saa olla tulevikus",
+    "start_date_greater_error": "Alguskuupäev ei tohi olla lõppkuupäevast varasem"
+}

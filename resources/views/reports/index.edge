@@ -1,0 +1,159 @@
+@layout('layouts/main')
+
+@section('title')
+    <title> {{ antl.formatMessage('report.reports') }} - Meal Tracker </title>
+@endsection
+
+@section('body')
+    <h2 class="mb-4"> {{ antl.formatMessage('report.meal_reports') }} </h2>
+
+    <!--  custom properties -->
+    <div id="error-msg" 
+      data-future-date-error="{{ antl.formatMessage('report.future_date_error') }}"
+      data-start-date-greater-error="{{ antl.formatMessage('report.start_date_greater_error') }}"
+      class="text-danger mb-3 d-none"></div> 
+
+    <form class="d-md-flex align-items-end mb-5" id="date-form">
+        <div class="me-0 me-md-5 mb-3 mb-md-0">
+            <label for="start-date" class="form-label mb-1">{{ antl.formatMessage('report.start_date') }}</label>
+            <input id="start-date" name="start_date" class="form-control" type="date" value="{{ startDate }}" />
+        </div>
+        <div class="me-0 me-md-5 mb-3 mb-md-0">
+            <label for="end-date" class="form-label mb-1">{{ antl.formatMessage('report.end_date') }}</label>
+            <input id="end-date" name="end_date" class="form-control" type="date" value="{{ endDate }}" />
+        </div>
+        <div>
+            <button type="submit" class="btn btn-success btn-sm me-2">{{ antl.formatMessage('report.filter') }}</button>
+            <button class="btn btn-dark btn-sm" id="clear-btn">{{ antl.formatMessage('report.clear') }}</button>
+        </div>
+    </form>
+
+    <div class="card-group mb-5">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="card-title">{{ antl.formatMessage('report.most_consumed_meal') }}</h5>
+                <p class="card-text">
+                    {{ mostConsumedMeal.meal.name }}
+                    <span class="badge rounded-pill bg-warning text-dark ms-2">{{ mostConsumedMeal.total_count }}</span>
+                </p>
+            </div>
+        </div>
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="card-title">{{ antl.formatMessage('report.highest_calory_meal') }}</h5>
+                <p class="card-text">
+                    {{ highestCaloryMeal.meal.name }}
+                    <span class="badge rounded-pill bg-warning text-dark ms-2">{{ highestCaloryMeal.total_calories }}</span>
+                </p>
+            </div>
+        </div>
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="card-title">{{ antl.formatMessage('report.favourite_meal') }}</h5>
+                <p class="card-text">
+                    {{ favoriteMeal.meal.name }}
+                    <span class="badge rounded-pill bg-warning text-dark ms-2 rating">{{ favoriteMeal.average_rating }}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">{{ antl.formatMessage('report.meal') }} <span class="badge rounded-pill bg-warning text-dark ms-2">{{ totals.unique_meals }}</span></th>
+            <th scope="col">{{ antl.formatMessage('report.total_consumption') }} <span class="badge rounded-pill bg-warning text-dark ms-2">{{ totals.total_count }}</span></th>
+            <th scope="col">{{ antl.formatMessage('report.total_calories') }} <span class="badge rounded-pill bg-warning text-dark ms-2">{{ totals.total_calories }}</span></th>
+            <th scope="col">{{ antl.formatMessage('report.average_rating') }} <span class="badge rounded-pill bg-warning text-dark ms-2 rating">{{ totals.average_rating }}</span></th>
+        </tr>
+        </thead>
+        <tbody>
+            @each(userMeal in userMeals.data)
+                <tr>
+                    <td>{{ mealsObj[userMeal.meal_id].name }}</td>
+                    <td>{{ userMeal.total_count }}</td>
+                    <td>{{ userMeal.total_calories }}</td>
+                    <td class="rating">{{ userMeal.average_rating }}</td>
+                </tr>
+            @endeach
+        </tbody>
+    </table>
+
+    <div class="mt-5">
+        <div>
+          <span class="me-3">{{ antl.formatMessage('meals.current_page') }}: <span class="badge rounded-pill bg-warning text-dark">{{ userMeals.page }}</span></span> 
+        </div>
+    
+        @if(totals.unique_meals > userMeals.perPage)
+          <nav aria-label="Page navigation mt-3">
+            <ul class="pagination justify-content-center">
+              <li class="page-item {{ (userMeals.page - 1) <= 0 ? 'disabled': '' }}">
+                <a class="page-link" href="?start_date={{ startDate }}&end_date={{ endDate }}&page={{ userMeals.page - 1 }}" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?start_date={{ startDate }}&end_date={{ endDate }}&page={{ userMeals.page }}">
+                  {{ userMeals.page }}
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?start_date={{ startDate }}&end_date={{ endDate }}&page={{ userMeals.page + 1 }}">
+                  {{ userMeals.page + 1 }}
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?start_date={{ startDate }}&end_date={{ endDate }}&page={{ userMeals.page + 2 }}">
+                  {{ userMeals.page + 2 }}
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?start_date={{ startDate }}&end_date={{ endDate }}&page={{ userMeals.page + 4}}" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        @endif
+      </div>
+
+
+    <script>
+        const errorMessageElement = document.getElementById("error-msg");
+        const formElement = document.getElementById("date-form");
+        const clearBtnElement = document.getElementById("clear-btn");
+        const startDateElement = document.getElementById("start-date")
+        const endDateElement = document.getElementById("end-date")
+
+        formElement.addEventListener("submit", function(event) {
+            const today = new Date();
+           
+            const startDate = new Date(startDateElement.value);
+            const endDate = new Date(endDateElement.value);
+
+            if (startDate > today || endDate > today) { // date are in the future
+                event.preventDefault();
+                errorMessageElement.classList.remove("d-none");
+                errorMessageElement.textContent = errorMessageElement.dataset.futureDateError;
+                return;
+            } else if (startDate > endDate) {
+                event.preventDefault(); // stop form submission
+                errorMessageElement.classList.remove("d-none");
+                errorMessageElement.textContent = errorMessageElement.dataset.startDateGreaterError;
+                return;
+            }
+        });
+
+
+        clearBtnElement.addEventListener('click', function (event) { 
+            startDateElement.value = '';
+            endDateElement.value = '';
+        });
+
+        document.querySelectorAll('.rating').forEach(function (dateElement) {
+            dateElement.textContent = parseFloat(dateElement.textContent).toFixed(1); // round rating to 2 decimal places
+        });
+    </script>
+@endsection
+
+

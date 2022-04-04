@@ -3,5 +3,9 @@
     "add_meal": "Ajouter un repas",
     "sign_in": "S'identifier",
     "sign_out": "Se déconnecter",
-    "sign_up": "S'inscrire"
+    "sign_up": "S'inscrire",
+    "language": "Langue",
+    "english": "Anglais",
+    "french": "français",
+    "estonia": "Estonie"
 }   

@@ -15,7 +15,7 @@ class SetLocale {
     let locale = request.get().lang || savedLocale;
 
     // accept only 'en' or 'fr'
-    if (locale !== 'en' && locale !== 'fr') {
+    if (locale !== 'en' && locale !== 'ee' && locale !== 'fr') {
       locale = 'en'
     }
 
