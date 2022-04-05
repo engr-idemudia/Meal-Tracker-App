@@ -22,19 +22,19 @@
             
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ antl.formatMessage('navbar.language') }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="langDropdown">
+                          <li><a class="dropdown-item {{ antl.currentLocale() == 'en' ? 'text-primary' : '' }}" href="?lang=en">{{ antl.formatMessage('navbar.english') }}</a></li>
+                          <li><a class="dropdown-item {{ antl.currentLocale() == 'fr' ? 'text-primary' : '' }}" href="?lang=fr">{{ antl.formatMessage('navbar.french') }}</a></li>
+                          <li><a class="dropdown-item {{ antl.currentLocale() == 'ee' ? 'text-primary' : '' }}" href="?lang=ee">{{ antl.formatMessage('navbar.estonia') }}</a></li>
+                        </ul>
+                    </li>
                     @loggedIn
                         <a class="nav-link" href="/meals">{{ antl.formatMessage('navbar.my_meals') }}</a>
                         <a class="nav-link" href="/reports">{{ antl.formatMessage('report.reports') }}</a>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ antl.formatMessage('navbar.language') }}
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="langDropdown">
-                              <li><a class="dropdown-item {{ antl.currentLocale() == 'en' ? 'text-primary' : '' }}" href="?lang=en">{{ antl.formatMessage('navbar.english') }}</a></li>
-                              <li><a class="dropdown-item {{ antl.currentLocale() == 'fr' ? 'text-primary' : '' }}" href="?lang=fr">{{ antl.formatMessage('navbar.french') }}</a></li>
-                              <li><a class="dropdown-item {{ antl.currentLocale() == 'ee' ? 'text-primary' : '' }}" href="?lang=ee">{{ antl.formatMessage('navbar.estonia') }}</a></li>
-                            </ul>
-                        </li>
                         <a class="nav-link" href="/signout">{{ antl.formatMessage('navbar.sign_out') }}</a>
                         <span class="navbar-text">{{ auth.user.email }}</span>
                     @else

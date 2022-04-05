@@ -18,7 +18,9 @@ class ReportsController {
             .groupBy('meal_id')
             .orderBy('total_count', 'desc')
             .first()
-        mostConsumedMeal.meal = await Meal.find(mostConsumedMeal.meal_id);
+        if (mostConsumedMeal) {
+            mostConsumedMeal.meal =  await Meal.find(mostConsumedMeal.meal_id);
+        }
 
         const highestCaloryMeal = await this.applyDatesToQuery(UserMeal.query(), startDate, endDate)
             .select('meal_id')
@@ -27,7 +29,9 @@ class ReportsController {
             .groupBy('meal_id')
             .orderBy('total_calories', 'desc')
             .first()
-        highestCaloryMeal.meal = await Meal.find(highestCaloryMeal.meal_id)
+        if (highestCaloryMeal) {
+            highestCaloryMeal.meal = await Meal.find(highestCaloryMeal.meal_id);
+        }
 
         const favoriteMeal = await this.applyDatesToQuery(UserMeal.query(), startDate, endDate)
             .select('meal_id')
@@ -36,7 +40,9 @@ class ReportsController {
             .groupBy('meal_id')
             .orderBy('average_rating', 'desc')
             .first()
-        favoriteMeal.meal = await Meal.find(favoriteMeal.meal_id)
+        if (favoriteMeal) {
+            favoriteMeal.meal = await Meal.find(favoriteMeal.meal_id);
+        }
 
         const userMeals = await this.applyDatesToQuery(UserMeal.query(), startDate, endDate)
             .select('meal_id')
@@ -48,9 +54,11 @@ class ReportsController {
             .orderBy('total_count', 'desc')
             .paginate(page, 5)
 
-        const meals = await Meal.query().where('id', 'IN', userMeals.data.map(userMeal => userMeal.meal_id)).fetch();
         const mealsObj = {}
-        meals.rows.forEach(meal => mealsObj[meal.id] = meal)
+        if (userMeals.data.length > 0) {
+            const meals = await Meal.query().where('id', 'IN', userMeals.data.map(userMeal => userMeal?.meal_id)).fetch();
+            meals.rows.forEach(meal => mealsObj[meal.id] = meal)
+        }
 
         const totals = await this.applyDatesToQuery(UserMeal.query(), startDate, endDate)
             .countDistinct('meal_id as unique_meals')

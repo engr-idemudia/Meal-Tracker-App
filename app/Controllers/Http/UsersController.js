@@ -13,7 +13,7 @@ class UsersController {
         await User.create(request.only(['email', 'password']))
 
         session.flash({ success: antl.formatMessage('flash_messages.sign_up_success') })
-        return response.redirect('/');
+        return response.redirect('/signin');
     }
 
     // GET /signin

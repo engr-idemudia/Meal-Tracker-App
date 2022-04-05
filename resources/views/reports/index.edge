@@ -33,8 +33,8 @@
             <div class="card-body">
                 <h5 class="card-title">{{ antl.formatMessage('report.most_consumed_meal') }}</h5>
                 <p class="card-text">
-                    {{ mostConsumedMeal.meal.name }}
-                    <span class="badge rounded-pill bg-warning text-dark ms-2">{{ mostConsumedMeal.total_count }}</span>
+                    {{ mostConsumedMeal.meal.name || 'No data' }}
+                    <span class="badge rounded-pill bg-warning text-dark ms-2">{{ mostConsumedMeal.total_count || 0 }}</span>
                 </p>
             </div>
         </div>
@@ -42,8 +42,8 @@
             <div class="card-body">
                 <h5 class="card-title">{{ antl.formatMessage('report.highest_calory_meal') }}</h5>
                 <p class="card-text">
-                    {{ highestCaloryMeal.meal.name }}
-                    <span class="badge rounded-pill bg-warning text-dark ms-2">{{ highestCaloryMeal.total_calories }}</span>
+                    {{ highestCaloryMeal.meal.name || 'No data' }}
+                    <span class="badge rounded-pill bg-warning text-dark ms-2">{{ highestCaloryMeal.total_calories || 0 }}</span>
                 </p>
             </div>
         </div>
@@ -51,8 +51,8 @@
             <div class="card-body">
                 <h5 class="card-title">{{ antl.formatMessage('report.favourite_meal') }}</h5>
                 <p class="card-text">
-                    {{ favoriteMeal.meal.name }}
-                    <span class="badge rounded-pill bg-warning text-dark ms-2 rating">{{ favoriteMeal.average_rating }}</span>
+                    {{ favoriteMeal.meal.name || 'No data' }}
+                    <span class="badge rounded-pill bg-warning text-dark ms-2 rating">{{ favoriteMeal.average_rating || 0 }}</span>
                 </p>
             </div>
         </div>
@@ -61,10 +61,10 @@
     <table class="table">
         <thead>
             <tr>
-            <th scope="col">{{ antl.formatMessage('report.meal') }} <span class="badge rounded-pill bg-warning text-dark ms-2">{{ totals.unique_meals }}</span></th>
-            <th scope="col">{{ antl.formatMessage('report.total_consumption') }} <span class="badge rounded-pill bg-warning text-dark ms-2">{{ totals.total_count }}</span></th>
-            <th scope="col">{{ antl.formatMessage('report.total_calories') }} <span class="badge rounded-pill bg-warning text-dark ms-2">{{ totals.total_calories }}</span></th>
-            <th scope="col">{{ antl.formatMessage('report.average_rating') }} <span class="badge rounded-pill bg-warning text-dark ms-2 rating">{{ totals.average_rating }}</span></th>
+            <th scope="col">{{ antl.formatMessage('report.meal') }} <span class="badge rounded-pill bg-warning text-dark ms-2">{{ totals.unique_meals || 0 }}</span></th>
+            <th scope="col">{{ antl.formatMessage('report.total_consumption') }} <span class="badge rounded-pill bg-warning text-dark ms-2">{{ totals.total_count || 0 }}</span></th>
+            <th scope="col">{{ antl.formatMessage('report.total_calories') }} <span class="badge rounded-pill bg-warning text-dark ms-2">{{ totals.total_calories || 0 }}</span></th>
+            <th scope="col">{{ antl.formatMessage('report.average_rating') }} <span class="badge rounded-pill bg-warning text-dark ms-2 rating">{{ totals.average_rating || 0 }}</span></th>
         </tr>
         </thead>
         <tbody>
@@ -78,6 +78,10 @@
             @endeach
         </tbody>
     </table>
+
+    @if(userMeals.data.length <= 0)
+        <p class="text-center my-5">No data </p>
+    @endif
 
     <div class="mt-5">
         <div>
