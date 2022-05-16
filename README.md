@@ -14,7 +14,7 @@ Deployed app: https://meal-tracker-01.herokuapp.com/
 * Edit meal page - Users can edit meal consumptions
 * My Meals page - Users can view a paginated list of their meals and can delete meal consumptions
 * Reports page - Users can view their meal reports over a period of time
-* Language translations for English, French and Estonia
+* Language translations - for English, French and Estonia
 
 ### Tech stack
 * Nodejs framework - [Adonisjs](https://adonisjs.com/)
