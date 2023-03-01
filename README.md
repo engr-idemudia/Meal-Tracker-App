@@ -5,7 +5,7 @@ An app that tracks the meals eaten by users each day so that over time a user ca
 they enjoy the most, the meals they consume the most and their highest calories meals.
 It enables users to know their calories intake in order to maintain a healthier life style.
 
-Deployed app: https://meal-tracker-01.herokuapp.com/
+Deployed app: https://meal-tracker-01.herokuapp.com/   //site not available, requires paid subscription  
 
 ### Features / Pages
 * Sign up page - Users can create account
