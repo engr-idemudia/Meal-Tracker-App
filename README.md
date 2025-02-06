@@ -1,9 +1,7 @@
 # Meal-Tracker-App
 
 ### Description
-An app that tracks the meals eaten by users each day so that over time a user can know the meals 
-they enjoy the most, the meals they consume the most and their highest calories meals.
-It enables users to know their calories intake in order to maintain a healthier life style.
+An application designed to track users' daily meals, providing insights into their dietary habits over time. The app helps users identify their most frequently consumed meals, their most enjoyed dishes, and those with the highest calorie content. By offering a comprehensive analysis of calorie intake, the application supports users in making informed dietary choices to maintain a healthier lifestyle.
 
 Deployed app: https://meal-tracker-01.herokuapp.com/   //site not available, requires paid subscription  
 
